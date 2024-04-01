@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   gather_facts: no
-  become: false
+  become: true
   
   tasks:
     - name: Backup the current ini.conf file
