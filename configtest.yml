@@ -3,8 +3,8 @@
   hosts: all
   become: yes
   vars:
-    original_file_path: /home/user/testing/ini.conf
-    backup_file_prefix: /home/user/testing/ini.conf_backup
+    original_file_path: /home/pawas/testing/ini.conf
+    backup_file_prefix: /home/pawas/testing/ini.conf_backup
     new_config_url: https://github.com/fawwaz26/ansible-fluentd/blob/main/ini.conf
 
   tasks:
