@@ -4,21 +4,22 @@
   gather_facts: no
   tasks:
     - name: Get current timestamp
-      ansible.builtin.command: date +%Y%m%d%H%M%S
+      command: date +%Y%m%d%H%M%S
       register: current_time
 
     - name: Check if ini.conf exists
-      ansible.builtin.stat:
+      stat:
         path: /home/pawas/testing/ini.conf
       register: ansible_stat
 
     - name: Backup existing ini.conf file
-      ansible.builtin.copy:
+      copy:
         src: /home/pawas/testing/ini.conf
-        dest: "/home/pawas/testing/ini.conf_backup_{{ current_time.stdout }}"
+        dest: "/home/pawas/testing/ini.conf_backup{{ current_time.stdout }}"
         remote_src: yes
+      when: ansible_stat.stat.exists
 
     - name: Download new ini.conf file
-      ansible.builtin.get_url:
+      get_url:
         url: https://raw.githubusercontent.com/fawwaz26/ansible-fluentd/main/ini.conf
         dest: /home/pawas/testing/ini.conf
