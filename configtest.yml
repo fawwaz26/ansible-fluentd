@@ -7,8 +7,8 @@
   tasks:
     - name: Backup the current ini.conf file
       ansible.builtin.copy:
-        src: /home/pawas/testing/ini.conf
-        dest: /home/pawas/testing/ini.conf.backup
+        src: /home/testing/ini.conf
+        dest: /home/testing/ini.conf.backup
         remote_src: yes
 
     - name: Download the new ini.conf file
