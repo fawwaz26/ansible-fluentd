@@ -8,14 +8,10 @@
     new_config_url: https://raw.githubusercontent.com/fawwaz26/ansible-fluentd/main/ini.conf
 
   tasks:
-    - name: Get current timestamp
-      ansible.builtin.command: "date +%Y%m%d%H%M%S"
-      register: current_time
-
     - name: Backup original ini.conf file
       ansible.builtin.copy:
         src: "{{ original_file_path }}"
-        dest: "{{ backup_file_prefix }}_{{ current_time.stdout }}.conf"
+        dest: "{{ backup_file_prefix }}.conf"
         remote_src: yes
       become: yes
 
