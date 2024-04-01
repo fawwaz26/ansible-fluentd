@@ -1,6 +1,5 @@
 ---
 - name: Update ini.conf file without using sudo for certain tasks
-  hosts: localhost
   gather_facts: no
 
   tasks:
