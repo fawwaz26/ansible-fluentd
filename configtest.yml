@@ -1,23 +1,16 @@
 ---
-- name: Backup and update ini.conf file
-  hosts: all
-  become: yes
-  vars:
-    original_file_path: /home/pawas/testing/ini.conf
-    backup_file_prefix: /home/pawas/testing/ini.conf_backup
-    new_config_url: https://raw.githubusercontent.com/fawwaz26/ansible-fluentd/main/ini.conf
-
+- name: Backup and Replace File
+  hosts: your_target_host
   tasks:
-    - name: Backup original ini.conf file
+    - name: Backup the original ini.conf file
       ansible.builtin.copy:
-        src: "{{ original_file_path }}"
-        dest: "{{ backup_file_prefix }}.conf"
+        src: /home/pawas/testing/ini.conf
+        dest: /home/pawas/testing/ini.conf.backup
         remote_src: yes
       become: yes
 
-    - name: Download and replace ini.conf with the new file
-      ansible.builtin.get_url:
-        url: "{{ new_config_url }}"
-        dest: "{{ original_file_path }}"
-        mode: '0644'
+    - name: Replace ini.conf with the new file
+      ansible.builtin.copy:
+        src: /path/to/your/new/ini.conf
+        dest: /home/pawas/testing/ini.conf
       become: yes
