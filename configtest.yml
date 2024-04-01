@@ -8,12 +8,12 @@
   tasks:
     - name: Backup the current ini.conf file
       ansible.builtin.copy:
-        src: /mnt/ini.conf
-        dest: /mnt/ini.conf.backup
+        src: /home/user/testing/ini.conf
+        dest: /home/user/testing/ini.conf.backup
         remote_src: yes
 
     - name: Download the new ini.conf file
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/fawwaz26/ansible-fluentd/main/ini.conf
-        dest: /mnt/ini.conf
+        dest: /home/user/testing/ini.conf
         force: yes
