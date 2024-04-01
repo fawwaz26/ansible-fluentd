@@ -1,5 +1,7 @@
 ---
 - name: Update and backup ini.conf file without using sudo
+  hosts: localhost
+  connection: local
   gather_facts: no
   
   tasks:
