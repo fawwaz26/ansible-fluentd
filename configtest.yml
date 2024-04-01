@@ -1,18 +1,16 @@
 ---
-- name: Update and backup ini.conf file
-  hosts: localhost
-  become: yes
+- name: Update and backup ini.conf file without using sudo
+  gather_facts: no
+  
   tasks:
     - name: Backup the current ini.conf file
       ansible.builtin.copy:
         src: /home/pawas/testing/ini.conf
         dest: /home/pawas/testing/ini.conf.backup
         remote_src: yes
-      become: yes
 
     - name: Download the new ini.conf file
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/fawwaz26/ansible-fluentd/main/ini.conf
         dest: /home/pawas/testing/ini.conf
         force: yes
-      become: yes
