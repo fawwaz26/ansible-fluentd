@@ -1,19 +1,20 @@
 ---
-- name: Update and backup ini.conf file without using sudo
+- name: Update and backup ini.conf file
   hosts: localhost
-  connection: local
   gather_facts: no
-  become: true
-  
   tasks:
-    - name: Backup the current ini.conf file
-      ansible.builtin.copy:
-        src: /home/user/testing/ini.conf
-        dest: /home/user/testing/ini.conf.backup
-        remote_src: yes
+    - name: Get current timestamp
+      ansible.builtin.command: date +%Y%m%d%H%M%S
+      register: current_time
 
-    - name: Download the new ini.conf file
+    - name: Backup existing ini.conf file
+      ansible.builtin.copy:
+        src: /home/pawas/testing/ini.conf
+        dest: "/home/pawas/testing/ini.conf_backup_{{ current_time.stdout }}"
+        remote_src: yes
+      when: ansible.builtin.stat(path="/home/pawas/testing/ini.conf").stat.exists
+
+    - name: Download new ini.conf file
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/fawwaz26/ansible-fluentd/main/ini.conf
-        dest: /home/user/testing/ini.conf
-        force: yes
+        dest: /home/pawas/testing/ini.conf
