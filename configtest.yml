@@ -12,11 +12,6 @@
         path: /home/pawas/testing/ini.conf
       register: ansible_stat
 
-    - name: Create testing directory
-      file:
-        path: /home/pawas/testing
-        state: directory
-
     - name: Backup existing ini.conf file
       copy:
         src: /home/pawas/testing/ini.conf
