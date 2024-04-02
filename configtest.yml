@@ -1,6 +1,5 @@
 ---
 - name: Update ini.conf file
-  hosts: localhost
   become: false
   tasks:
     - name: Create a backup of the existing ini.conf
