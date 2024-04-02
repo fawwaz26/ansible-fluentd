@@ -1,0 +1,34 @@
+---
+- name: Konfigurasi dan restart service Fluentd dengan pengecekan status
+  hosts: all
+  vars:
+    timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+  tasks:
+    - name: Backup file ini.conf yang lama dengan timestamp
+      ansible.builtin.copy:
+        src: /home/pawas/testing/ini.conf
+        dest: "/home/pawas/testing/ini.conf.backup-{{ timestamp }}"
+        remote_src: yes
+      become: yes
+
+    - name: Download dan ganti file ini.conf dengan versi baru
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/fawwaz26/ansible-fluentd/main/ini.conf
+        dest: /home/pawas/testing/ini.conf
+        force: yes
+      become: yes
+
+    - name: Restart service Fluentd
+      ansible.builtin.service:
+        name: td-agent
+        state: restarted
+      become: yes
+
+    - name: Cek status service Fluentd
+      ansible.builtin.shell: systemctl is-active td-agent
+      register: fluentd_status
+      become: yes
+
+    - name: Tampilkan status service Fluentd
+      ansible.builtin.debug:
+        msg: "Status service Fluentd: {{ fluentd_status.stdout }}"
