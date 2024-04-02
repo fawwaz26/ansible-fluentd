@@ -1,11 +1,13 @@
 ---
-- name: Konfigurasi file ini.conf
+- name: Konfigurasi file ini.conf dengan backup berdasarkan tanggal
   hosts: all
+  vars:
+    timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
   tasks:
-    - name: Backup file ini.conf yang lama
+    - name: Backup file ini.conf yang lama dengan timestamp
       ansible.builtin.copy:
         src: /home/pawas/testing/ini.conf
-        dest: /home/pawas/testing/ini.conf.backup
+        dest: "/home/pawas/testing/ini.conf.backup-{{ timestamp }}"
         remote_src: yes
       become: yes
 
