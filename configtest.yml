@@ -1,6 +1,6 @@
 ---
 - name: Update ini.conf file
-  host: 10.0.2.15
+  hosts: 127.0.0.1
   become: yes
   tasks:
     - name: Create a backup of the existing ini.conf
