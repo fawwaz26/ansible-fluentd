@@ -1,6 +1,17 @@
-- name: Hello World Sample
+---
+- name: Konfigurasi file ini.conf
   hosts: all
   tasks:
-    - name: Hello Message
-      debug:
-        msg: "Hello World!"
+    - name: Backup file ini.conf yang lama
+      ansible.builtin.copy:
+        src: /home/pawas/testing/ini.conf
+        dest: /home/pawas/testing/ini.conf.backup
+        remote_src: yes
+      become: yes
+
+    - name: Download dan ganti file ini.conf dengan versi baru
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/fawwaz26/ansible-fluentd/main/ini.conf
+        dest: /home/pawas/testing/ini.conf
+        force: yes
+      become: yes
