@@ -1,6 +1,6 @@
 ---
 - name: Update ini.conf file
-  become: false
+  become: yes
   tasks:
     - name: Create a backup of the existing ini.conf
       ansible.builtin.copy:
