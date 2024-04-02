@@ -17,7 +17,7 @@
         src: /home/pawas/testing/ini.conf
         dest: "/home/pawas/testing/ini.conf_backup_{{ current_time.stdout }}"
         remote_src: yes
-      when: ansible_stat.stat.exists
+      when: ansible_stat.exists
 
     - name: Download new ini.conf file
       get_url:
