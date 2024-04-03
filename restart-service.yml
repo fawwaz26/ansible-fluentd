@@ -1,5 +1,5 @@
 ---
-- name: Konfigurasi dan restart service Fluentd dengan pengecekan status
+- name: Restart service Fluentd dengan pengecekan status
   hosts: all
     - name: Restart service Fluentd
       ansible.builtin.service:
