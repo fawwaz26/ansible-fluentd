@@ -1,0 +1,17 @@
+---
+- name: Konfigurasi dan restart service Fluentd dengan pengecekan status
+  hosts: all
+    - name: Restart service Fluentd
+      ansible.builtin.service:
+        name: td-agent
+        state: restarted
+      become: yes
+
+    - name: Cek status service Fluentd
+      ansible.builtin.shell: systemctl is-active td-agent
+      register: fluentd_status
+      become: yes
+
+    - name: Tampilkan status service Fluentd
+      ansible.builtin.debug:
+        msg: "Status service Fluentd: {{ fluentd_status.stdout }}"
