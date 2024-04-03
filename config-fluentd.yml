@@ -13,7 +13,7 @@
 
     - name: Download dan ganti file ini.conf dengan versi baru
       ansible.builtin.get_url:
-        url: https://raw.githubusercontent.com/fawwaz26/ansible-fluentd/main/ini.conf #Ini ganti linknya
+        url: https://raw.githubusercontent.com/fawwaz26/ansible-fluentd/main/td-agent.conf
         dest: /etc/td-agent/td-agent.conf
         force: yes
       become: yes
