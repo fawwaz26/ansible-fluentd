@@ -1,17 +1,22 @@
 ---
-- name: Restart service Fluentd dengan pengecekan status
+- name: Manage and check status of td-agent service
   hosts: all
-    - name: Restart service Fluentd
-      ansible.builtin.service:
+  become: yes
+  tasks:
+    - name: Gather the service facts
+      service_facts:
+    
+    - name: Show td-agent service status before restart
+      debug:
+        msg: "td-agent service status: {{ ansible_facts.services['td-agent.service'].state }}"
+    
+    - name: Restart td-agent service
+      service:
         name: td-agent
         state: restarted
-      become: yes
+      become: true
+      register: restart_result
 
-    - name: Cek status service Fluentd
-      ansible.builtin.shell: systemctl is-active td-agent
-      register: fluentd_status
-      become: yes
-
-    - name: Tampilkan status service Fluentd
-      ansible.builtin.debug:
-        msg: "Status service Fluentd: {{ fluentd_status.stdout }}"
+    - name: Show td-agent service status after restart
+      debug:
+        msg: "td-agent service status after restart: {{ restart_result.status }}"
