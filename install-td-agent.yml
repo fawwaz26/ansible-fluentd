@@ -1,0 +1,27 @@
+---
+- name: Install td-agent for Fluentd
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update system
+      apt:
+        update_cache: yes
+        upgrade: dist
+        cache_valid_time: 3600
+
+    - name: Import Treasure Data GPG key
+      ansible.builtin.apt_key:
+        url: https://packages.treasuredata.com/GPG-KEY-td-agent
+        state: present
+
+    - name: Add Treasure Data repository to APT
+      ansible.builtin.apt_repository:
+        repo: deb http://packages.treasuredata.com/4/ubuntu/{{ ansible_distribution_release }}/ {{ ansible_distribution_release }} contrib
+        state: present
+        update_cache: yes
+
+    - name: Install td-agent
+      apt:
+        name: td-agent
+        state: present
